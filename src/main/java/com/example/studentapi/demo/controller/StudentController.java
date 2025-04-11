@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.studentapi.demo.entity.Student;
+import com.example.studentapi.demo.dto.StudentDTO;
+import com.example.studentapi.demo.vo.StudentVO;
 import com.example.studentapi.demo.service.StudentService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,28 +30,27 @@ public class StudentController {
 
     @Operation(summary = "获取所有学生", description = "获取所有学生信息")
     @GetMapping
-    public List<Student> getAllStudents() {
+    public List<StudentVO> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     @Operation(summary = "获取学生信息", description = "根据学生ID获取学生信息")
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable Integer id) {
+    public StudentVO getStudentById(@PathVariable Integer id) {
         return studentService.getStudentById(id);
     }
 
     @Operation(summary = "添加学生", description = "添加学生信息")
     @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
+    public StudentVO addStudent(@RequestBody StudentDTO studentDTO) {
+        return studentService.addStudent(studentDTO);
     }
 
     @Operation(summary = "更新学生", description = "更新学生信息")
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Integer id, @RequestBody Student student) {
-        student.setId(id);
-        studentService.updateStudent(student);
-        return student;
+    public StudentVO updateStudent(@PathVariable Integer id, @RequestBody StudentDTO studentDTO) {
+        studentDTO.setId(id);
+        return studentService.updateStudent(studentDTO);
     }
 
     @Operation(summary = "删除学生", description = "根据学生ID删除学生信息")
